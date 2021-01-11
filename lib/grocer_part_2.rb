@@ -44,6 +44,16 @@ def checkout(cart, coupons)
   # some irritated customers
   
   
+  cart.map do |cart_item|
+    if cart_item[:clearance]
+      cart_item[:price] *= 0.80
+      cart_item[:price].round(2)
+    end
+  end
+  cart
+end
+
+def checkout(cart, coupons)
   new_cart = consolidate_cart(cart)
   couped_cart = apply_coupons(new_cart, coupons)
   total = apply_clearance(couped_cart).sum do |e|
